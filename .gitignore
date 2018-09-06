@@ -3,3 +3,21 @@ env
 **/__pycache__/*.pyc
 **/*.sqlite3
 **/node_modules
+
+
+# testing
+**/coverage
+
+# production
+frontend/bandshare/build
+
+# misc
+frontend/bandshare/.DS_Store
+frontend/bandshare/.env.local
+frontend/bandshare/.env.development.local
+frontend/bandshare/.env.test.local
+frontend/bandshare/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
