@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
-from api.models import Profile
+from api.models import BandProfile
 from rest_framework import viewsets
 from django.core import serializers
-from api.serializers import ProfileSerializer
+from api.serializers import BandProfileSerializer
 
 
-class ProfileViewSet(viewsets.ModelViewSet):
-  queryset = Profile.objects.all()
-  serializer_class = ProfileSerializer
+class BandProfileViewSet(viewsets.ModelViewSet):
+  queryset = BandProfile.objects.all()
+  serializer_class = BandProfileSerializer

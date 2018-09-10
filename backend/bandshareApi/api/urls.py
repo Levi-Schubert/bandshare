@@ -6,7 +6,8 @@ from api.views import *
 router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
-router.register(r'profiles', ProfileViewSet)
+router.register(r'band_profiles', BandProfileViewSet)
+router.register(r'user_profiles', UserProfileViewSet)
 router.register(r'genres', GenreViewSet)
 router.register(r'songs', SongViewSet)
 

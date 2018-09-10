@@ -1,6 +1,6 @@
-from api.models import Profile, Song
+from api.models import BandProfile, Song
 from rest_framework import viewsets
-from api.serializers import ProfileSerializer, SongSerializer
+from api.serializers import BandProfileSerializer, SongSerializer
 
 
 class SongViewSet(viewsets.ModelViewSet):
