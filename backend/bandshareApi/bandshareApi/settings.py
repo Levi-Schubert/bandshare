@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 	'rest_framework',
+	'rest_framework.authtoken',
     'corsheaders',
     'api.apps.ApiConfig',
     'django.contrib.admin',
@@ -41,6 +42,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # ],
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+    'localhost:3000',
+    '127.0.0.1:8080',
+    '127.0.0.1:3000',
+    '127.0.0.1:3001',
+    'localhost:3001',
+)
 
 MIDDLEWARE = [
 	'corsheaders.middleware.CorsMiddleware',
@@ -117,11 +136,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 
-MEDIA_URL = '/mp3/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "mp3")
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
