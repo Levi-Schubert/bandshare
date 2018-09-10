@@ -4,6 +4,8 @@ env
 **/*.sqlite3
 **/node_modules
 
+# django file uploads directory
+backend/bandshareApi/uploads/**
 
 # testing
 **/coverage
