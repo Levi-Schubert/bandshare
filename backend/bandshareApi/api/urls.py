@@ -7,7 +7,8 @@ router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
 router.register(r'profiles', ProfileViewSet)
-router.register(r'genre', GenreViewSet)
+router.register(r'genres', GenreViewSet)
+router.register(r'songs', SongViewSet)
 
 
 urlpatterns = [

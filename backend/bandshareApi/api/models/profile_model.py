@@ -9,3 +9,6 @@ class Profile(models.Model):
 	state = models.CharField(max_length=128)
 	image = models.FileField(upload_to='profile_images/', blank=True)
 	isBand = models.BooleanField(default='False')
+
+	def __str__(self):
+		return self.user.username
