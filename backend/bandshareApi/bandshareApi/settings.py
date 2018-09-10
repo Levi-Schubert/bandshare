@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 	'rest_framework',
+	'rest_framework.authtoken',
     'corsheaders',
     'api.apps.ApiConfig',
     'django.contrib.admin',
@@ -43,12 +44,12 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # ],
 }
 
 CORS_ORIGIN_WHITELIST = (
@@ -135,7 +136,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 
 MEDIA_URL = '/uploads/'

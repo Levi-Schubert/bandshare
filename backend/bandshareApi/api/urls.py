@@ -7,7 +7,10 @@ router = DefaultRouter()
 
 router.register(r'users', UserViewSet)
 router.register(r'profiles', ProfileViewSet)
+router.register(r'genre', GenreViewSet)
+
 
 urlpatterns = [
 	url(r'^', include(router.urls)),
+	url(r'^register/', register_user)
 ]
