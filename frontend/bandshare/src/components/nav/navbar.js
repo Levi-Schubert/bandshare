@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 
 
 export default class Navbar extends Component {
+
+	
     render() {
         return (
             <nav >
@@ -11,10 +13,10 @@ export default class Navbar extends Component {
                         <Link to="/">Home</Link>
                     </li>
                     <li>
-                        <Link to="/song">Song</Link>
+                        <Link to="/login">Login</Link>
                     </li>
                     <li>
-                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
                     </li>
                 </ul>
             </nav>
