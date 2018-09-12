@@ -14,6 +14,6 @@ class BandProfileViewSet(viewsets.ModelViewSet):
 
 	def list(self, request):
 		profile = BandProfile.objects.filter(user=self.request.user)
-		valid_profile = get_object_or_404(profile, user=user)
+		valid_profile = get_object_or_404(profile, user=self.request.user)
 		serializer = BandProfileSerializer(valid_profile, context={'request': request})
 		return Response(serializer.data)

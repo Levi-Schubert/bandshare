@@ -5,6 +5,35 @@ import { Link } from "react-router-dom"
 export default class Navbar extends Component {
 
 
+	loggedIn = function(){
+		if(this.props.loggedIn){
+			if(this.props.isBand){
+				return 	<div>
+							<li>
+								<Link to='/upload'>Upload</Link>
+							</li>
+							<li>
+								<Link to='/logout'>Logout</Link>
+							</li>
+						</div>
+			}else{
+				return 	<div>
+							<li>
+								<Link to='/logout'>Logout</Link>
+							</li>
+						</div>
+			}
+		}else{
+			return <div>
+					<li>
+						<Link to="/login">Login</Link>
+					</li>
+					<li>
+						<Link to="/register">Register</Link>
+					</li>
+				</div>
+		}
+	}
 
 
     render() {
@@ -14,12 +43,7 @@ export default class Navbar extends Component {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/register">Register</Link>
-                    </li>
+					{this.loggedIn()}
 					<li>
 						{/* temporary nav to test listen component */}
 						<Link to="/listen">Listen</Link>

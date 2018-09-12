@@ -9,18 +9,39 @@ class App extends Component {
 	state = {
 		loggedIn: false,
 		token:"",
-		api: "http://127.0.0.1:8000"
+		api: "http://127.0.0.1:8000",
+		isBand: false
 	}
 
 	logIn = function(res) {
-		this.setState({token: res})
+		this.setState({token: `token ${res.token}`, loggedIn: true})
+		// debugger
+		try{
+			fetch(`${this.state.api}/band_profiles/`, {
+				headers: {
+					"Content-type": "application/json",
+					'Authorization': `token ${res.token}`
+				},
+				method: 'GET'
+			}).then(r => r.json()).then(r => {
+				if(r.hasOwnProperty('isBand')){
+					this.setState({isBand: r.isBand})
+				}
+			})
+		}catch(err){
+			
+		}
+	}.bind(this)
+
+	logOut = function(){
+		this.setState({token : "", loggedIn: false, isBand: false})
 	}.bind(this)
 
 	render() {
 		return (
 			<React.Fragment>
-				<Navbar loggedIn={this.state.loggedIn} />
-				<ApplicationViews logIn={this.logIn} api={this.state.api} token={this.state.token}/>
+				<Navbar loggedIn={this.state.loggedIn}  isBand={this.state.isBand} />
+				<ApplicationViews loggedIn={this.state.loggedIn} logIn={this.logIn} logOut={this.logOut} api={this.state.api} isBand={this.state.isBand} token={this.state.token}/>
 			</React.Fragment>
 		)
 	}
