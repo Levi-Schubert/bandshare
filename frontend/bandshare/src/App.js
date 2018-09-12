@@ -8,7 +8,6 @@ class App extends Component {
 
 	state = {
 		loggedIn: false,
-		user: "",
 		token:"",
 		api: "http://127.0.0.1:8000"
 	}
@@ -21,7 +20,7 @@ class App extends Component {
 		return (
 			<React.Fragment>
 				<Navbar loggedIn={this.state.loggedIn} />
-				<ApplicationViews logIn={this.logIn} api={this.state.api}/>
+				<ApplicationViews logIn={this.logIn} api={this.state.api} token={this.state.token}/>
 			</React.Fragment>
 		)
 	}

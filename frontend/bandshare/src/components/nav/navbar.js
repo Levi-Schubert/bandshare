@@ -4,7 +4,9 @@ import { Link } from "react-router-dom"
 
 export default class Navbar extends Component {
 
-	
+
+
+
     render() {
         return (
             <nav >
@@ -18,6 +20,10 @@ export default class Navbar extends Component {
                     <li>
                         <Link to="/register">Register</Link>
                     </li>
+					<li>
+						{/* temporary nav to test listen component */}
+						<Link to="/listen">Listen</Link>
+					</li>
                 </ul>
             </nav>
         )
