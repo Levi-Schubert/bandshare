@@ -30,7 +30,7 @@ export default class ApplicationViews extends Component {
 					return <Register {...props} logIn={this.props.logIn} api={this.props.api}/>
 				}} />
 				<Route exact path="/upload" render={(props) => {
-					return <Upload {...props} isBand={this.props.isBand} loggedIn={this.props.loggedIn} api={this.props.api}/>
+					return <Upload {...props} isBand={this.props.isBand} token={this.props.token} loggedIn={this.props.loggedIn} api={this.props.api}/>
 				}} />
 				<Route exact path="/listen/:id" render={(props) => {
 					return <Player {...props} token={this.props.token} api={this.props.api}/>

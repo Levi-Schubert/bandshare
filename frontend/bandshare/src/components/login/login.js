@@ -26,7 +26,6 @@ export default class Login extends Component {
 			body: JSON.stringify(data),
 			method: 'POST'
 		}).then(r => r.json()).then(r => {
-			console.log(r)
 			this.props.logIn(r)
 			this.props.history.replace('/')
 			
