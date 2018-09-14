@@ -6,6 +6,8 @@ import Register from "./register/register"
 import Player from "./player/player"
 import Logout from './login/logout'
 import Upload from './upload/upload'
+import Band from './profile/band'
+import User from './profile/user'
 
 
 export default class ApplicationViews extends Component {
@@ -34,6 +36,12 @@ export default class ApplicationViews extends Component {
 				}} />
 				<Route exact path="/listen/:id" render={(props) => {
 					return <Player {...props} token={this.props.token} api={this.props.api}/>
+				}} />
+				<Route exact path="/band" render={(props) => {
+					return <Band {...props} loggedIn={this.props.loggedIn} token={this.props.token} api={this.props.api}/>
+				}} />
+				<Route exact path="/user" render={(props) => {
+					return <User {...props} loggedIn={this.props.loggedIn} token={this.props.token} api={this.props.api}/>
 				}} />
             </React.Fragment>
         )

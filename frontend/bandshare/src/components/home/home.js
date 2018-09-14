@@ -9,10 +9,10 @@ export default class Home extends Component {
 	
 	band = function(){
 		if(this.props.isBand && this.props.loggedIn){
-			return <h2> You're a band accont </h2>
+			return <h2> You're a band account </h2>
 		}else{
 			if(this.props.loggedIn){
-				return <h2>You're a listener accout</h2>
+				return <h2>You're a listener account</h2>
 			}
 		}
 	}

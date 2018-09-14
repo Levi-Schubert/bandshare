@@ -13,11 +13,17 @@ export default class Navbar extends Component {
 								<Link to='/upload'>Upload</Link>
 							</li>
 							<li>
+								<Link to='/band'>My Profile</Link>
+							</li>
+							<li>
 								<Link to='/logout'>Logout</Link>
 							</li>
 						</div>
 			}else{
 				return 	<div>
+							<li>
+								<Link to='/user'>My Profile</Link>
+							</li>
 							<li>
 								<Link to='/logout'>Logout</Link>
 							</li>

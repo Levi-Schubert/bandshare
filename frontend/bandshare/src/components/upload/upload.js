@@ -45,7 +45,6 @@ export default class Upload extends Component {
 			method: 'GET'
 		}).then(r => r.json()).then(r => {
 			let data = new FormData()
-			// this.state.genre
 			data.append('title', this.state.title)
 			data.append('album', this.state.album)
 			data.append('description', this.state.description)
@@ -53,11 +52,7 @@ export default class Upload extends Component {
 			this.state.genre.forEach(genre => {
 				data.append('genre', genre)
 			});
-			// data.append('genre', ['http://127.0.0.1:8000/genres/1/' , 'http://127.0.0.1:8000/genres/2/'])
 			data.append('mp3', this.state.mp3[0])
-			for(let i of data.entries()){
-				console.log(`${i[0]} ${i[1]}`)
-			}
 			fetch(`${this.props.api}/songs/`, {
 				headers: {
 					'Authorization': `${this.props.token}`,
