@@ -19,30 +19,6 @@ export default class User extends Component {
 		}
 	}.bind(this)
 
-	likedList = function () {
-		if (this.state.liked !== null) {
-			if (this.state.liked.length === 0) {
-				return <p>You have no liked songs</p>
-			} else {
-				let likes = []
-				this.state.liked.forEach(like => {
-					let id = like.substring(26)
-					id = id.substring(0, id.length - 1)
-					fetch(like).then(r => r.json()).then(song => {
-						fetch(`${song.band}`).then(r => r.json()).then(band => {
-							likes.push(
-								<li>
-									<Link to={`/listen/${id}`}>{`${song.title} by ${band.bandName}`}</Link>
-								</li>
-							)
-						})
-					})
-				});
-
-				this.setState({ likes: likes })
-			}
-		}
-	}.bind(this)
 
 	componentDidMount() {
 		if (!this.props.loggedIn) {

@@ -11,6 +11,7 @@ router.register(r'user_profiles', UserProfileViewSet)
 router.register(r'genres', GenreViewSet)
 router.register(r'songs', SongViewSet)
 router.register(r'songs/(?P<genre>[\w-]+)/$', SongViewSet)
+router.register(r'songs/(?P<band>[\w-]+)/$', SongViewSet)
 
 
 urlpatterns = [

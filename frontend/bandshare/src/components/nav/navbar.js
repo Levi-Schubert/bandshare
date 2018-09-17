@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import bandshare from '../../img/bandshare.jpg'
 
 
 export default class Navbar extends Component {
@@ -94,14 +95,10 @@ export default class Navbar extends Component {
             <nav >
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/"><img src={bandshare} alt="Home" width='100px'/></Link>
                     </li>
 					{this.loggedIn()}
 					{this.genre()}
-					{/* <li>
-						 temporary nav to test listen component 
-						<Link to="/listen">Listen</Link>
-					</li> */}
                 </ul>
             </nav>
         )

@@ -126,7 +126,7 @@ export default class Player extends Component {
 	}.bind(this)
 
 	componentDidMount(){
-		if(this.props.location.pathname.includes('undefined')){
+		if(this.props.location.pathname.includes('undefined') || this.props.location.pathname.includes('Select')){
 			this.props.history.replace('/')
 		}else{
 			// get id from pathname
