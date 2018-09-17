@@ -38,7 +38,7 @@ class App extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Navbar loggedIn={this.state.loggedIn} isBand={this.state.isBand} />
+				<Navbar loggedIn={this.state.loggedIn} isBand={this.state.isBand} api={this.state.api} />
 				<ApplicationViews loggedIn={this.state.loggedIn} logIn={this.logIn} logOut={this.logOut} api={this.state.api} isBand={this.state.isBand} token={this.state.token} />
 			</React.Fragment>
 		)

@@ -12,12 +12,12 @@ class SongViewSet(viewsets.ModelViewSet):
 
 	
 	def list(self, request):
-		print('using this one')
 		queryset = Song.objects.all()
 		http_methods = ['get']
 		genre = self.request.query_params.get('genre', None)
 		if genre is not None:
 			queryset = queryset.filter(genre=genre)
+			queryset = queryset.order_by('?') [:10]
 		serializer = SongSerializer(queryset, many=True, context={'request': request})
 		return Response(serializer.data)
 

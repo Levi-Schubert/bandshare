@@ -4,6 +4,9 @@ import { Link } from "react-router-dom"
 
 export default class Navbar extends Component {
 
+	state = {
+		genres: null
+	}
 
 	loggedIn = function(){
 		if(this.props.loggedIn){
@@ -42,6 +45,50 @@ export default class Navbar extends Component {
 	}
 
 
+	formChange = function (e) {
+		let options = e.target.options
+		let selected = ""
+		for (let i = 0; i < options.length; i += 1) {
+			if (options[i].selected) {
+				selected = options[i].value
+			}
+		}
+		this.setState({ genre: selected })
+	}.bind(this)
+
+	populate = function(){
+		if (this.state.genres !== null) {
+			let options = []
+			let i = 0
+			this.state.genres.forEach(genre => {
+				options.push(<option key={i} value={`${genre.id}`}>{`${genre.genre}`}</option>)
+				i += 1
+			});
+			return options
+		}
+	}.bind(this)
+
+	genre = function(){
+		return <li>
+					<select id='genre' onChange={this.formChange}>
+						<option value={null} defaultValue> Select a Genre </option>
+						{this.populate()}
+					</select>
+					<Link to={`/listen/genre/${this.state.genre}`}>Listen</Link>
+				</li>
+	}.bind(this)
+
+	componentDidMount(){
+		fetch(`${this.props.api}/genres/`, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			method: 'GET'
+		}).then(r => r.json()).then(r => {
+			this.setState({ genres: r })
+		})
+	}
+
     render() {
         return (
             <nav >
@@ -50,10 +97,11 @@ export default class Navbar extends Component {
                         <Link to="/">Home</Link>
                     </li>
 					{this.loggedIn()}
-					<li>
-						{/* temporary nav to test listen component */}
+					{this.genre()}
+					{/* <li>
+						 temporary nav to test listen component 
 						<Link to="/listen">Listen</Link>
-					</li>
+					</li> */}
                 </ul>
             </nav>
         )

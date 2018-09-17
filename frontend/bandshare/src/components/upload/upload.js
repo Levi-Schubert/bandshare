@@ -68,8 +68,10 @@ export default class Upload extends Component {
 	selectForm = function () {
 		if (this.state.genres !== null) {
 			let options = []
+			let i = 0
 			this.state.genres.forEach(genre => {
-				options.push(<option value={`${genre.id}`}>{`${genre.genre}`}</option>)
+				options.push(<option key={i} value={`${genre.id}`}>{`${genre.genre}`}</option>)
+				i += 1
 			});
 			return options
 		}

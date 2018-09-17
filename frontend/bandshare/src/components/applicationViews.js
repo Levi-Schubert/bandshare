@@ -37,6 +37,9 @@ export default class ApplicationViews extends Component {
 				<Route exact path="/listen/:id" render={(props) => {
 					return <Player {...props} token={this.props.token} api={this.props.api}/>
 				}} />
+				<Route exact path="/listen/genre/:id" render={(props) => {
+					return <Player {...props} token={this.props.token} api={this.props.api}/>
+				}} />
 				<Route exact path="/band" render={(props) => {
 					return <Band {...props} loggedIn={this.props.loggedIn} token={this.props.token} api={this.props.api}/>
 				}} />
