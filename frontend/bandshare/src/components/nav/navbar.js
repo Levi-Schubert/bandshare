@@ -25,7 +25,7 @@ export default class Navbar extends Component {
 			}else{
 				return 	<div>
 							<li>
-								<Link to='/user'>My Profile</Link>
+								<Link to='/favorites'>My Favorites</Link>
 							</li>
 							<li>
 								<Link to='/logout'>Logout</Link>

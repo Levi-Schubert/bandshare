@@ -8,6 +8,7 @@ export default class Player extends Component {
 		super(props)
 		this.wavesurfer = null;
 		this.playing = false;
+		this.volume = 100;
 	}
 
 	state={
@@ -17,8 +18,52 @@ export default class Player extends Component {
 		wavesurfer: null,
 		track: 0,
 		current: null,
-		currentArtist: null
+		currentArtist: null,
 	}
+
+	handleLike = function(){
+		if(this.props.loggedIn){
+			fetch(`${this.props.api}/user_profiles/`, {
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `${this.props.token}`
+				},
+				method: 'GET'
+			}).then(r => r.json()).then(r => {
+				let form = new FormData()
+				if(r.liked.length !== 0){
+					r.liked.forEach(song => {
+						form.append('liked', song)
+					});	
+				}
+				let id
+				if(this.state.multi){
+					id = this.state.current.id
+				}else{
+					id = this.state.song.id
+				}
+				form.append('liked', `${this.props.api}/songs/${id}/`)
+				fetch(`${this.props.api}/user_profiles/${r.id}/`, {
+					headers: {
+						'Authorization': `${this.props.token}`
+					},
+					body: form,
+					method: 'PATCH'
+				}).then(res => res.json()).then(res => {
+					console.log(res)
+				})
+			})
+		}
+	}.bind(this)
+
+	setVolume = function(){
+		this.wavesurfer.setVolume(this.volume/100)
+	}.bind(this)
+
+	change = function (evt) {
+		this.volume = evt.target.value
+		this.setVolume()
+	}.bind(this)
 
 	nowPlaying = function (){
 
@@ -48,7 +93,8 @@ export default class Player extends Component {
 		fetch(`${this.state.mp3s[this.state.track - 1].band}`).then(r => r.json()).then(band => {
 			this.setState({currentArtist: band.bandName})
 		})
-		this.setState({track: this.state.track -= 1})
+		let val = this.state.track - 1
+		this.setState({track: val})
 		this.playing = false
 	}.bind(this)
 	
@@ -58,7 +104,8 @@ export default class Player extends Component {
 		fetch(`${this.state.mp3s[this.state.track + 1].band}`).then(r => r.json()).then(band => {
 			this.setState({currentArtist: band.bandName})
 		})
-		this.setState({track: this.state.track += 1})
+		let val = this.state.track + 1
+		this.setState({track: val})
 		this.playing = false
 	}.bind(this)
 
@@ -72,37 +119,49 @@ export default class Player extends Component {
 		}
 	}
 
+	favoriteButton = function(){
+		if(this.props.loggedIn && !this.props.isBand){
+			return <input type='button' value='Favorite' onClick={this.handleLike} />
+		}
+	}.bind(this)
+
 	componentDidMount(){
 		if(this.props.location.pathname.includes('undefined')){
 			this.props.history.replace('/')
-		}
-		// get id from pathname
-		if(this.props.location.pathname.includes('genre')){
-			this.setState({multi: true})
-			let id = this.props.location.pathname.substring(14)
-			fetch(`${this.props.api}/songs/?genre=${id}`).then(r => r.json()).then(songs => {
-				this.setState({current: songs[0]})
-				fetch(`${songs[0].band}`).then(r => r.json()).then(band => {
-					this.setState({currentArtist: band.bandName})
-					this.setState({mp3s: songs})
-				})
-				console.log(songs)
-			})
 		}else{
-			let id = this.props.location.pathname.substring(8)
-			fetch(`${this.props.api}/songs/${id}`).then(r => r.json()).then(song => {
-				fetch(`${song.band}`).then(r => r.json()).then(band => {
-					this.setState({currentArtist: band.bandName})
-					this.setState({song: song})
+			// get id from pathname
+			if(this.props.location.pathname.includes('genre')){
+				this.setState({multi: true})
+				let id = this.props.location.pathname.substring(14)
+				fetch(`${this.props.api}/songs/?genre=${id}`).then(r => r.json()).then(songs => {
+					this.setState({current: songs[0]})
+					fetch(`${songs[0].band}`).then(r => r.json()).then(band => {
+						this.setState({currentArtist: band.bandName})
+						this.setState({mp3s: songs})
+					})
 				})
-			})
+			}else{
+				let id = this.props.location.pathname.substring(8)
+				fetch(`${this.props.api}/songs/${id}`).then(r => r.json()).then(song => {
+					fetch(`${song.band}`).then(r => r.json()).then(band => {
+						this.setState({currentArtist: band.bandName})
+						this.setState({song: song})
+					})
+				})
+			}
+			let wavesurfer = WaveSurfer.create({
+				container: '#waveform',
+				waveColor: 'turquoise',
+				progressColor: 'blue'
+			});
+			this.wavesurfer = wavesurfer
 		}
-		let wavesurfer = WaveSurfer.create({
-			container: '#waveform',
-			waveColor: 'turquoise',
-			progressColor: 'blue'
-		});
-		this.wavesurfer = wavesurfer
+	}
+
+	componentWillUnmount(){
+		if(this.wavesurfer !== null){
+			this.wavesurfer.destroy()
+		}
 	}
 
     render() {
@@ -115,6 +174,9 @@ export default class Player extends Component {
 				<input type='button' value='&nbsp;&nbsp;&nbsp;&#171;&nbsp;&nbsp;&nbsp;' onClick={this.prev}/>
 				<input type='button' value='&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;&nbsp;' onClick={this.playSong}/>
 				<input type='button' value='&nbsp;&nbsp;&nbsp;&#187;&nbsp;&nbsp;&nbsp;' onClick={this.next} />
+				<span>&nbsp;&nbsp;Volume&nbsp;&nbsp;</span>
+				<input id='volume' type='range' min='0' max='100' defaultValue='100' onChange={this.change}/>
+				{this.favoriteButton()}
 			</div>
         )
     }

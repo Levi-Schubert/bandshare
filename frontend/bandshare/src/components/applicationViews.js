@@ -35,15 +35,15 @@ export default class ApplicationViews extends Component {
 					return <Upload {...props} isBand={this.props.isBand} token={this.props.token} loggedIn={this.props.loggedIn} api={this.props.api}/>
 				}} />
 				<Route exact path="/listen/:id" render={(props) => {
-					return <Player {...props} token={this.props.token} api={this.props.api}/>
+					return <Player {...props} token={this.props.token} api={this.props.api} token={this.props.token} loggedIn={this.props.loggedIn} isBand={this.props.isBand}/>
 				}} />
 				<Route exact path="/listen/genre/:id" render={(props) => {
-					return <Player {...props} token={this.props.token} api={this.props.api}/>
+					return <Player {...props} token={this.props.token} api={this.props.api} token={this.props.token} loggedIn={this.props.loggedIn} isBand={this.props.isBand}/>
 				}} />
 				<Route exact path="/band" render={(props) => {
 					return <Band {...props} loggedIn={this.props.loggedIn} token={this.props.token} api={this.props.api}/>
 				}} />
-				<Route exact path="/user" render={(props) => {
+				<Route exact path="/favorites" render={(props) => {
 					return <User {...props} loggedIn={this.props.loggedIn} token={this.props.token} api={this.props.api}/>
 				}} />
             </React.Fragment>
