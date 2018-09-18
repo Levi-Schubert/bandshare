@@ -18,6 +18,7 @@ export default class Player extends Component {
 		multi: false,
 		wavesurfer: null,
 		track: 0,
+		maxIndex: 0,
 		current: null,
 		currentArtist: null,
 		bandId: null
@@ -90,27 +91,49 @@ export default class Player extends Component {
 	}.bind(this)
 
 	prev = function(){
-		this.wavesurfer.load(this.state.mp3s[this.state.track - 1].mp3)
-		this.setState({current: this.state.mp3s[this.state.track - 1]})
-		fetch(`${this.state.mp3s[this.state.track - 1].band}`).then(r => r.json()).then(band => {
-			this.setState({currentArtist: band.bandName})
-			this.setState({bandId: band.id})
-		})
-		let val = this.state.track - 1
-		this.setState({track: val})
-		this.playing = false
+		if(this.state.multi && (this.state.track !== 0)){
+			this.wavesurfer.load(this.state.mp3s[this.state.track - 1].mp3)
+			this.setState({current: this.state.mp3s[this.state.track - 1]})
+			fetch(`${this.state.mp3s[this.state.track - 1].band}`).then(r => r.json()).then(band => {
+				this.setState({currentArtist: band.bandName})
+				this.setState({bandId: band.id})
+			})
+			let val = this.state.track - 1
+			this.setState({track: val})
+			this.playing = false
+		}else{
+			if(!this.state.multi){
+				this.wavesurfer.seekTo(0)
+			}
+		}
 	}.bind(this)
 	
 	next = function(){
-		this.wavesurfer.load(this.state.mp3s[this.state.track + 1].mp3)
-		this.setState({current: this.state.mp3s[this.state.track + 1]})
-		fetch(`${this.state.mp3s[this.state.track + 1].band}`).then(r => r.json()).then(band => {
-			this.setState({currentArtist: band.bandName})
-			this.setState({bandId: band.id})
+		if(this.state.multi){
+			this.wavesurfer.load(this.state.mp3s[this.state.track + 1].mp3)
+			this.setState({current: this.state.mp3s[this.state.track + 1]})
+			fetch(`${this.state.mp3s[this.state.track + 1].band}`).then(r => r.json()).then(band => {
+				this.setState({currentArtist: band.bandName})
+				this.setState({bandId: band.id})
+			})
+			let val = this.state.track + 1
+			this.setState({track: val})
+			this.playing = false
+			if(val === this.state.maxIndex - 1){
+				this.loadMore()
+			}
+		}
+	}.bind(this)
+
+	loadMore = function(){
+		let id = this.props.location.pathname.substring(14)
+		fetch(`${this.props.api}/songs/?genre=${id}`).then(r => r.json()).then(songs => {
+			// debugger
+			let newList = this.state.mp3s
+			newList = newList.concat(songs)
+			this.setState({mp3s: newList})
+			this.setState({maxIndex: newList.length - 1})
 		})
-		let val = this.state.track + 1
-		this.setState({track: val})
-		this.playing = false
 	}.bind(this)
 
 	player = function(){
@@ -141,7 +164,9 @@ export default class Player extends Component {
 					this.setState({current: songs[0]})
 					fetch(`${songs[0].band}`).then(r => r.json()).then(band => {
 						this.setState({currentArtist: band.bandName})
+						this.setState({bandId: band.id})
 						this.setState({mp3s: songs})
+						this.setState({maxIndex: songs.length - 1})
 					})
 				})
 			}else{
@@ -149,6 +174,7 @@ export default class Player extends Component {
 				fetch(`${this.props.api}/songs/${id}`).then(r => r.json()).then(song => {
 					fetch(`${song.band}`).then(r => r.json()).then(band => {
 						this.setState({currentArtist: band.bandName})
+						this.setState({bandId: band.id})
 						this.setState({song: song})
 					})
 				})
