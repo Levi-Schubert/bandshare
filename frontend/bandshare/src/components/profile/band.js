@@ -29,7 +29,7 @@ export default class Band extends Component {
 	}.bind(this)
 
 	image = function(){
-		if(this.state.band.image.length > 1){
+		if(this.state.band.image !== null){
 			return <img src={this.state.band.image} alt={this.state.band.bandName} width='200px'/>
 		}
 	}.bind(this)

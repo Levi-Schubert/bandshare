@@ -7,4 +7,4 @@ from api.serializers import UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
-  http_method_names = ['get', 'delete']
+  http_method_names = ['get']

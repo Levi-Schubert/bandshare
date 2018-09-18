@@ -5,7 +5,6 @@ export default class Upload extends Component {
 	state = {
 		title: "",
 		album: "",
-		description: "",
 		mp3: null,
 		genres: null,
 		genre: null
@@ -47,7 +46,6 @@ export default class Upload extends Component {
 			let data = new FormData()
 			data.append('title', this.state.title)
 			data.append('album', this.state.album)
-			data.append('description', this.state.description)
 			data.append('band', r.url)
 			this.state.genre.forEach(genre => {
 				data.append('genre', genre)
@@ -87,10 +85,8 @@ export default class Upload extends Component {
 					<input id="title" type='text' value={this.state.title} onChange={this.change} />
 					<label htmlFor='album'>Album</label>
 					<input id="album" type='text' value={this.state.album} onChange={this.change} />
-					<label htmlFor='description'>Description (optional)</label>
-					<input id="description" type='text' value={this.state.description} onChange={this.change} />
 					<label htmlFor='mp3'>MP3</label>
-					<input id="mp3" type='file' onChange={this.fileChange} />
+					<input id="mp3" type='file' accept='audio/mp3' onChange={this.fileChange} />
 					<label htmlFor='genre'>Genres</label>
 					<select id='genre' multiple onChange={ this.formChange}>
 						{this.selectForm()}

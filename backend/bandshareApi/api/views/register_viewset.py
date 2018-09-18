@@ -34,8 +34,6 @@ def register_user(request):
 	else:
 		new_profile = UserProfile.objects.create(
 			user=new_user,
-			city=req_body['city'],
-			state=req_body['state'],
 		)
 
 	token = Token.objects.create(user=new_user)

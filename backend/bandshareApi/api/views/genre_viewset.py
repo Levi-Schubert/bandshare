@@ -6,5 +6,5 @@ from api.serializers import GenreSerializer
 class GenreViewSet(viewsets.ModelViewSet):
   queryset = Genre.objects.all()
   serializer_class = GenreSerializer
-  http_methods = ['get']
+  http_methods = ['get', 'post']
 
