@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class BandProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	bandName = models.CharField(max_length=128)
 	bio = models.CharField(max_length=512, blank=True)
 	city = models.CharField(max_length=128)
 	state = models.CharField(max_length=128)

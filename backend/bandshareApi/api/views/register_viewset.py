@@ -26,6 +26,7 @@ def register_user(request):
 	if 'isBand' in req_body:
 		new_profile = BandProfile.objects.create(
 			user=new_user,
+			bandName=req_body['bandName'],
 			city=req_body['city'],
 			state=req_body['state'],
 			isBand=req_body['isBand'],

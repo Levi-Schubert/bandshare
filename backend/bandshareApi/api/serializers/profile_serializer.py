@@ -5,4 +5,4 @@ from rest_framework import serializers
 class BandProfileSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = BandProfile
-		fields = ('id', 'url','user', 'bio', 'city', 'state', 'image', 'isBand')
+		fields = ('id', 'url','user', 'bandName', 'bio', 'city', 'state', 'image', 'isBand')
