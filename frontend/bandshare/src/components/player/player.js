@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import WaveSurfer from 'wavesurfer.js';
+import { Link } from "react-router-dom"
 
 
 export default class Player extends Component {
@@ -19,6 +20,7 @@ export default class Player extends Component {
 		track: 0,
 		current: null,
 		currentArtist: null,
+		bandId: null
 	}
 
 	handleLike = function(){
@@ -68,10 +70,10 @@ export default class Player extends Component {
 	nowPlaying = function (){
 
 		if(this.state.multi && this.state.mp3s !== null){
-			return <h2>{this.state.current.title} by {this.state.currentArtist}</h2>
+			return <div><h2>{this.state.current.title}</h2><Link to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link> <br/></div>
 		}else{
 			if(this.state.song !== null){
-				return <h2>{this.state.song.title} by {this.state.currentArtist}</h2>
+				return <div><h2>{this.state.song.title}</h2> <Link to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link></div>
 			}
 		}
 		
@@ -92,6 +94,7 @@ export default class Player extends Component {
 		this.setState({current: this.state.mp3s[this.state.track - 1]})
 		fetch(`${this.state.mp3s[this.state.track - 1].band}`).then(r => r.json()).then(band => {
 			this.setState({currentArtist: band.bandName})
+			this.setState({bandId: band.id})
 		})
 		let val = this.state.track - 1
 		this.setState({track: val})
@@ -103,6 +106,7 @@ export default class Player extends Component {
 		this.setState({current: this.state.mp3s[this.state.track + 1]})
 		fetch(`${this.state.mp3s[this.state.track + 1].band}`).then(r => r.json()).then(band => {
 			this.setState({currentArtist: band.bandName})
+			this.setState({bandId: band.id})
 		})
 		let val = this.state.track + 1
 		this.setState({track: val})

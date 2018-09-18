@@ -5,7 +5,11 @@ export default class Band extends Component {
 
 	state = {
 		band: null,
-		songs: null
+		songs: null,
+		editable: false,
+		editing: false,
+		bio: '',
+		image: null
 	}
 
 	linkSongs = function(){
@@ -24,17 +28,87 @@ export default class Band extends Component {
 		}
 	}.bind(this)
 
+	image = function(){
+		if(this.state.band.image.length > 1){
+			return <img src={this.state.band.image} alt={this.state.band.bandName} width='200px'/>
+		}
+	}.bind(this)
+
+	handleChange = function (evt) {
+		const stateToChange = {}
+		stateToChange[evt.target.id] = evt.target.value
+		this.setState(stateToChange)
+	}.bind(this)
+
+	imageChange = function (e) {
+		this.setState({image: e.target.files})
+	}.bind(this)
+
+
+	edit = function(){
+		if(this.state.editing){
+			this.setState({editing: false})
+		}else{
+			this.setState({editing: true})
+		}
+	}.bind(this)
+
+	submitEdit = function(){
+		let form = new FormData()
+		form.append('image', this.state.image[0])
+		form.append('bio', this.state.bio)
+		fetch(`${this.props.api}/band_profiles/${this.state.band.id}/`, {
+		headers: {
+			'Authorization': `${this.props.token}`
+		},
+		method: 'PATCH',
+		body: form
+		}).then(r => r.json()).then(r => {
+			console.log(r)
+			this.setState({editing: false})
+		})
+	}.bind(this)
+
 	loaded = function(){
-		if(this.state.band !== null ){
-			return 	<div>
+		if(this.state.band !== null){
+			if(this.state.editable){
+				if(!this.state.editing){
+					return 	<div>
+								<h1>{this.state.band.bandName}</h1>
+								{this.image()}
+								<h3>{this.state.band.city}, {this.state.band.state} </h3>
+								<p>{this.state.band.bio}</p>
+								<input type='button' value='Edit' onClick={this.edit}/>
+								<h3>Songs</h3>
+								<ul>
+									{this.linkSongs()}
+								</ul>
+							</div>
+				}else{
+					return 	<div>
+								<h1>{this.state.band.bandName}</h1>
+								{this.image()}
+								<h3>{this.state.band.city}, {this.state.band.state} </h3>
+								<label htmlFor='bio'>Bio</label>
+								<input id='bio' type='textarea' value={this.state.bio} onChange={this.handleChange} />
+								<label htmlFor='image'>Profile Image</label>
+								<input id='image' type='file' accept="image/x-png,image/gif,image/jpeg" onChange={this.imageChange}/>
+								<input type='button' value='Cancel' onClick={this.edit}/>
+								<input type='button' value='Save' onClick={this.submitEdit}/>
+							</div>
+				}
+			}else{
+				return 	<div>
 						<h1>{this.state.band.bandName}</h1>
+						{this.image()}
 						<h3>{this.state.band.city}, {this.state.band.state} </h3>
+						<p>{this.state.band.bio}</p>
 						<h3>Songs</h3>
 						<ul>
 							{this.linkSongs()}
 						</ul>
-
 					</div>
+			}
 		}
 	}.bind(this)
 
@@ -65,6 +139,8 @@ export default class Band extends Component {
 				method: 'GET'
 			}).then(r => r.json()).then(r => {
 				this.setState({band: r})
+				this.setState({bio: r.bio})
+				this.setState({editable: true})
 				fetch(`${this.props.api}/songs/?band=${r.id}`).then(res => res.json()).then(res => {
 					this.setState({songs: res})
 				})
