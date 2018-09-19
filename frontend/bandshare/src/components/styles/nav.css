@@ -1,0 +1,18 @@
+#nav{
+	margin-bottom:10px;
+	padding:0px;
+}
+
+#nav a{
+	margin:5px;
+}
+
+#genre{
+	width: 200px;
+}
+
+#genre__cont{
+	position: absolute;
+	left: calc(50% - 130px);
+	margin-left: auto;
+}

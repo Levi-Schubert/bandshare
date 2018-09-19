@@ -128,7 +128,6 @@ export default class Player extends Component {
 	loadMore = function(){
 		let id = this.props.location.pathname.substring(14)
 		fetch(`${this.props.api}/songs/?genre=${id}`).then(r => r.json()).then(songs => {
-			// debugger
 			let newList = this.state.mp3s
 			newList = newList.concat(songs)
 			this.setState({mp3s: newList})
@@ -181,8 +180,9 @@ export default class Player extends Component {
 			}
 			let wavesurfer = WaveSurfer.create({
 				container: '#waveform',
-				waveColor: 'turquoise',
-				progressColor: 'blue'
+				waveColor: '#e8cc17',
+				progressColor: '#34373a',
+				responsive: true
 			});
 			this.wavesurfer = wavesurfer
 		}

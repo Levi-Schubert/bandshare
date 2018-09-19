@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-
+import '../styles/register.css'
 
 export default class Register extends Component {
 
@@ -10,7 +10,7 @@ export default class Register extends Component {
 		passwordVerify: "",
 		city: "",
 		state: "",
-		isBand: false,
+		isBand: 'off',
 		bandName:''
     }
 
@@ -18,6 +18,14 @@ export default class Register extends Component {
 		const stateToChange = {}
 		stateToChange[evt.target.id] = evt.target.value
 		this.setState(stateToChange)
+	}.bind(this)
+
+	toggleIsBand = function(){
+		if(this.state.isBand === 'off'){
+			this.setState({isBand: 'on'})
+		}else{
+			this.setState({isBand: 'off'})
+		}
 	}.bind(this)
 
 	register = function(evt){
@@ -78,23 +86,43 @@ export default class Register extends Component {
 	
     render() {
 		return (
-			<div>
-				<h1>Register</h1>
-				<form action="" autoComplete='off'>
-					<label htmlFor='user'>Username</label>
-					<input id="user" type='text' value={this.state.user} onChange={this.change}/>
-					<label htmlFor='email'>Email</label>
-					<input id="email" type='text' value={this.state.email} onChange={this.change}/>
-					<label htmlFor='password'>Password</label>
-					<input id="password" type='password' value={this.state.password} onChange={this.change} autoComplete='off'/>
-					<label htmlFor='passwordVerify'>Verify password</label>
-					<input id="passwordVerify" type='password' value={this.state.passwordVerify} onChange={this.change} autoComplete='off'/>
-					<label htmlFor='isBand'>Band?</label>
-					<input id='isBand' type="checkbox" onChange={this.change}/>
+			<div className='container'>
+				<div className='level'>
+					<h1 className='title level-item'>Register</h1>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<label htmlFor='user'>Username</label>
+						<input id="user" className='input' type='text' value={this.state.user} onChange={this.change}/>
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<label htmlFor='email'>Email</label>
+						<input id="email" className='input' type='text' value={this.state.email} onChange={this.change}/>
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<label htmlFor='password'>Password</label>
+						<input id="password" className='input' type='password' value={this.state.password} onChange={this.change} autoComplete='off'/>
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<label htmlFor='passwordVerify'>Verify password</label>
+						<input id="passwordVerify" className='input' type='password' value={this.state.passwordVerify} onChange={this.change} autoComplete='off'/>
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<label htmlFor='isBand'>Band?</label>
+						<input id='isBand' type="checkbox" onChange={this.toggleIsBand}/>
+					</div>
+				</div>
 					{this.newBand()}
 					{this.passwordMatch()}
 					<input type="button" value="Register" onClick={this.register}/>
-				</form>
 			</div>
         )
     }
