@@ -29,7 +29,7 @@ export default class Band extends Component {
 	}.bind(this)
 
 	image = function(){
-		if(this.state.band.image.length > 1){
+		if(this.state.band.image !== null){
 			return <img src={this.state.band.image} alt={this.state.band.bandName} width='200px'/>
 		}
 	}.bind(this)
@@ -55,7 +55,9 @@ export default class Band extends Component {
 
 	submitEdit = function(){
 		let form = new FormData()
-		form.append('image', this.state.image[0])
+		if(this.state.image !== null){
+			form.append('image', this.state.image[0])
+		}
 		form.append('bio', this.state.bio)
 		fetch(`${this.props.api}/band_profiles/${this.state.band.id}/`, {
 		headers: {
@@ -64,7 +66,7 @@ export default class Band extends Component {
 		method: 'PATCH',
 		body: form
 		}).then(r => r.json()).then(r => {
-			console.log(r)
+			this.setState({band: r})
 			this.setState({editing: false})
 		})
 	}.bind(this)

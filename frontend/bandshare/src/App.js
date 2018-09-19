@@ -35,6 +35,11 @@ class App extends Component {
 		this.setState({ token: "", loggedIn: false, isBand: false })
 	}.bind(this)
 
+	componentDidMount(){
+		let root = document.getElementById('root')
+		root.classList.add('hero')
+	}
+
 	render() {
 		return (
 			<React.Fragment>

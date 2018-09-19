@@ -14,6 +14,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "bulma": "^0.7.1",
     "history": "^4.7.2",
     "react-router-dom": "^4.3.1",
     "wavesurfer.js": "^2.0.6"

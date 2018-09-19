@@ -1,0 +1,19 @@
+#user{
+	width: 300px;
+	margin-left:40px;
+}
+
+#email{
+	width: 300px;
+	margin-left:74px;
+}
+
+#password{
+	width: 300px;
+	margin-left:50px;
+}
+
+#passwordVerify{
+	width: 300px;
+	margin-left:8px;
+}
