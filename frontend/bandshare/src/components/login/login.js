@@ -33,8 +33,12 @@ export default class Login extends Component {
 			body: JSON.stringify(data),
 			method: 'POST'
 		}).then(r => r.json()).then(r => {
-			this.props.logIn(r)
-			this.props.history.replace('/')
+			if(r.hasOwnProperty('token')){
+				this.props.logIn(r)
+				this.props.history.replace('/')
+			}else{
+				alert('Incorrect username or password.')
+			}
 			
 		})
 	}.bind(this)
@@ -46,6 +50,7 @@ export default class Login extends Component {
 				<div className='level'>
 					<h1 className='title level-item'>Login</h1>
 				</div>
+				<form action="">
 					<div className='level'>
 						<div className='level-item'>
 							<label htmlFor='user'>Username</label>
@@ -63,6 +68,7 @@ export default class Login extends Component {
 						<input className='button is-warning is-inverted' type='button' value='Log In' onClick={this.login} />
 					</div>
 				</div>
+				</form>
 			</div>
         )
     }

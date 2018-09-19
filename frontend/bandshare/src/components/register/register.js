@@ -65,13 +65,25 @@ export default class Register extends Component {
 
 	newBand = function(){
 		if(this.state.isBand === 'on'){
-			return 	<div>
-						<label htmlFor='city'>City</label>
-						<input id="city" type='text' value={this.state.city} onChange={this.change}/>
-						<label htmlFor='state'>State</label>
-						<input id="state" type='text' value={this.state.state} onChange={this.change}/>
-						<label htmlFor='bandName'>Band Name</label>
-						<input id="bandName" type='text' value={this.state.bandName} onChange={this.change}/>
+			return 	<div className='container'>
+						<div className='level'>
+							<div className='level-item'>
+									<label htmlFor='city'>City</label>
+								<input className='input' id="city" type='text' value={this.state.city} onChange={this.change}/>
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item'>
+								<label htmlFor='state'>State</label>
+								<input className='input' id="state" type='text' value={this.state.state} onChange={this.change}/>
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item'>
+								<label htmlFor='bandName'>Band Name</label>
+								<input className='input' id="bandName" type='text' value={this.state.bandName} onChange={this.change}/>
+							</div>
+						</div>
 					</div>
 		}
 	}
@@ -81,6 +93,26 @@ export default class Register extends Component {
 			return <p> Passwords match</p>
 		}else{
 			return <p>Passwords do not match</p>
+		}
+	}.bind(this)
+
+	checkForm = function(){
+		if(this.state.isBand === 'off' && this.state.user !== '' && this.state.email !== '' && this.state.password !== '' && this.state.password === this.state.passwordVerify){
+			return true
+		}else{
+			if(this.state.isBand === 'on' && this.state.user !== '' && this.state.email !== '' && this.state.password === this.state.passwordVerify && this.state.password !== '' && this.state.city !== '' && this.state.state !== '' && this.state.bandName !== ''){
+				return true
+			}else{
+				return false
+			}
+		}
+	}.bind(this)
+
+	regButton = function(){
+		if(this.checkForm()){
+			return <input className='button is-warning is-inverted' type="button" value="Register" onClick={this.register}/>
+		}else{
+			return <input className='button is-warning is-inverted' type="button" value="Register" disabled/>
 		}
 	}.bind(this)
 	
@@ -121,8 +153,16 @@ export default class Register extends Component {
 					</div>
 				</div>
 					{this.newBand()}
-					{this.passwordMatch()}
-					<input type="button" value="Register" onClick={this.register}/>
+				<div className='level'>
+					<div className='level-item'>
+						{this.passwordMatch()}
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						{this.regButton()}
+					</div>
+				</div>
 			</div>
         )
     }

@@ -17,3 +17,22 @@
 	width: 300px;
 	margin-left:8px;
 }
+
+#isBand{
+	margin-left: 16px;
+}
+
+#city{
+	width: 300px;
+	margin-left:96px;
+}
+
+#state{
+	width: 300px;
+	margin-left:90px;
+}
+
+#bandName{
+	width: 300px;
+	margin-left:44px;
+}

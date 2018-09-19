@@ -4,7 +4,9 @@ export default class Logout extends Component {
 
 	componentDidMount(){
 		this.props.logOut()
+		localStorage.removeItem('bandshareAuth')
 		this.props.history.replace('/')
+		
 	}
     
 

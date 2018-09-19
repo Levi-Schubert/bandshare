@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import WaveSurfer from 'wavesurfer.js';
 import { Link } from "react-router-dom"
+import '../styles/player.css'
 
 
 export default class Player extends Component {
@@ -71,10 +72,32 @@ export default class Player extends Component {
 	nowPlaying = function (){
 
 		if(this.state.multi && this.state.mp3s !== null){
-			return <div><h2>{this.state.current.title}</h2><Link to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link> <br/></div>
+			return 	<div id='nowPlaying'>
+						<div className='level'>
+							<p className='title is-4 level-item'>Now Playing</p>
+						</div>
+						<div className='level'>
+							<div className='level-item'>
+								<h2 id='space' className='title is-4'>{this.state.current.title}</h2>
+								<h2 id='spacer' className='title is-4'>|</h2>
+								<Link id='space__link' className='title is-5 tag' to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link>
+							</div>
+						</div>
+					</div>
 		}else{
 			if(this.state.song !== null){
-				return <div><h2>{this.state.song.title}</h2> <Link to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link></div>
+				return 	<div id='nowPlaying'>
+							<div className='level'>
+								<p className='title is-4 level-item'>Now Playing</p>
+							</div>
+						<div className='level'>
+							<div className='level-item'>
+								<h2 id='space' className='title is-4'>{this.state.song.title}</h2> 
+								<h2 id='spacer' className='title is-4'>|</h2>			
+								<Link id='space__link' className='title is-5 tag' to={`/band/${this.state.bandId}`}>{this.state.currentArtist}</Link>
+							</div>
+						</div>
+					</div>
 			}
 		}
 		
@@ -147,7 +170,7 @@ export default class Player extends Component {
 
 	favoriteButton = function(){
 		if(this.props.loggedIn && !this.props.isBand){
-			return <input type='button' value='Favorite' onClick={this.handleLike} />
+			return <input id='fave' className='button is-warning is-inverted' type='button' value='Favorite' onClick={this.handleLike} />
 		}
 	}.bind(this)
 
@@ -196,17 +219,24 @@ export default class Player extends Component {
 
     render() {
         return (
-            <div>
-				<h1>Player</h1>
+            <div className='container'>
 				{this.nowPlaying()}
 				{this.player()}
-				<div id="waveform"></div>
-				<input type='button' value='&nbsp;&nbsp;&nbsp;&#171;&nbsp;&nbsp;&nbsp;' onClick={this.prev}/>
-				<input type='button' value='&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;&nbsp;' onClick={this.playSong}/>
-				<input type='button' value='&nbsp;&nbsp;&nbsp;&#187;&nbsp;&nbsp;&nbsp;' onClick={this.next} />
-				<span>&nbsp;&nbsp;Volume&nbsp;&nbsp;</span>
-				<input id='volume' type='range' min='0' max='100' defaultValue='100' onChange={this.change}/>
-				{this.favoriteButton()}
+				<div id="waveform" className='notification'></div>
+				<div className='level'>
+					<div className='level-item'>
+						<input className='button is-warning is-inverted' type='button' value='&nbsp;&nbsp;&nbsp;&#171;&nbsp;&nbsp;&nbsp;' onClick={this.prev}/>
+						<input id='play'className='button is-warning is-inverted' type='button' value='&nbsp;&nbsp;&nbsp;&#9654;&nbsp;&nbsp;&nbsp;' onClick={this.playSong}/>
+						<input className='button is-warning is-inverted' type='button' value='&nbsp;&nbsp;&nbsp;&#187;&nbsp;&nbsp;&nbsp;' onClick={this.next} />
+					</div>
+				</div>
+				<div className='level'>
+					<div className='level-item'>
+						<span>&nbsp;&nbsp;Volume&nbsp;&nbsp;</span>
+						<input id='volume' type='range' min='0' max='100' defaultValue='100' onChange={this.change}/>
+						{this.favoriteButton()}
+					</div>
+				</div>
 			</div>
         )
     }
