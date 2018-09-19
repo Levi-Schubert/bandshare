@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import '../styles/favorites.css'
 
 export default class User extends Component {
 
@@ -43,8 +44,10 @@ export default class User extends Component {
 						fetch(like).then(r => r.json()).then(song => {
 							fetch(`${song.band}`).then(r => r.json()).then(band => {
 								likes.push(
-									<li key={id}>
-										<Link to={`/listen/${id}`}>{`${song.title} by ${band.bandName}`}</Link>
+									<li key={id} className='level'>
+										<div className='level-item'>
+											<Link id='favorite' className='button is-warning is-inverted' to={`/listen/${id}`}>{`${song.title} by ${band.bandName}`}</Link>
+										</div>
 									</li>
 								)
 								return likes
@@ -64,9 +67,11 @@ export default class User extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className='container'>
+				<div className='level'>
+					<h2 className='title level-item'>Favorited Songs</h2>
+				</div>
 				<div id='favorite__songs'>
-					<h2>Favorited Songs</h2>
 					{this.list()}
 				</div>
 			</div>

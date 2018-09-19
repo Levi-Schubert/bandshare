@@ -27,6 +27,7 @@ class App extends Component {
 			if (r.hasOwnProperty('isBand')) {
 				this.setState({ isBand: r.isBand })
 			}
+			localStorage.setItem('bandshareAuth', res.token)
 		})
 
 	}.bind(this)
@@ -35,9 +36,21 @@ class App extends Component {
 		this.setState({ token: "", loggedIn: false, isBand: false })
 	}.bind(this)
 
+	previousLoggedIn = function(){
+		if(localStorage.getItem('bandshareAuth') !== null){
+			let auth = localStorage.getItem('bandshareAuth')
+			let res = {
+				token: auth
+			}
+			this.logIn(res)
+		}
+	}.bind(this)
+
 	componentDidMount(){
 		let root = document.getElementById('root')
 		root.classList.add('hero')
+		this.previousLoggedIn()
+		
 	}
 
 	render() {

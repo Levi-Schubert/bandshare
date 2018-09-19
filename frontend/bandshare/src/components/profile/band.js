@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import '../styles/band.css'
 
 export default class Band extends Component {
 
@@ -17,8 +18,10 @@ export default class Band extends Component {
 			let list = []
 			this.state.songs.forEach(song => {
 				list.push(
-					<li key={song.id}>
-						<Link to={`/listen/${song.id}`}>{song.title}</Link>
+					<li key={song.id} className='level'>
+						<div className='level-item'>
+							<Link id='band__song' className='button is-warning is-inverted' to={`/listen/${song.id}`}>{song.title}</Link>
+						</div>
 					</li>
 				)	
 			});
@@ -30,7 +33,11 @@ export default class Band extends Component {
 
 	image = function(){
 		if(this.state.band.image !== null){
-			return <img src={this.state.band.image} alt={this.state.band.bandName} width='200px'/>
+			return 	<div className='level'>
+						<div className='level-item'>
+							<img id='bandImage' src={this.state.band.image} alt={this.state.band.bandName} width='200px'/>
+						</div>
+					</div>
 		}
 	}.bind(this)
 
@@ -71,45 +78,113 @@ export default class Band extends Component {
 		})
 	}.bind(this)
 
+	fileName = function(){
+		if(this.state.image === null){
+			return 'Choose an image file'
+		}else{
+			return (this.state.image[0].name)
+		}
+	}
+
 	loaded = function(){
 		if(this.state.band !== null){
 			if(this.state.editable){
 				if(!this.state.editing){
-					return 	<div>
-								<h1>{this.state.band.bandName}</h1>
+					return 	<div className='container'>
+								<div className='level'>
+									<h1 className='title level-item'>{this.state.band.bandName}</h1>
+								</div>
 								{this.image()}
-								<h3>{this.state.band.city}, {this.state.band.state} </h3>
-								<p>{this.state.band.bio}</p>
-								<input type='button' value='Edit' onClick={this.edit}/>
-								<h3>Songs</h3>
+								<div className='level'>
+									<div className='level-item'>
+										<h3 className='title is-5'>{this.state.band.city}, {this.state.band.state} </h3>
+									</div>
+								</div>
+								<div className='level'>
+									<div className='level-item'>
+										<p>{this.state.band.bio}</p>
+									</div>
+								</div>
+								<div className='level'>
+									<div className='level-item'>
+										<input className='button is-warning is-inverted' type='button' value='Edit' onClick={this.edit}/>
+									</div>
+								</div>
+								<div className='level'>
+									<h3 className='title is-4 level-item'>Songs</h3>
+								</div>
 								<ul>
 									{this.linkSongs()}
 								</ul>
 							</div>
 				}else{
-					return 	<div>
-								<h1>{this.state.band.bandName}</h1>
+					return 	<div className='container'>
+								<div className='level'>
+									<h1 className='title level-item'>{this.state.band.bandName}</h1>
+								</div>
 								{this.image()}
-								<h3>{this.state.band.city}, {this.state.band.state} </h3>
-								<label htmlFor='bio'>Bio</label>
-								<input id='bio' type='textarea' value={this.state.bio} onChange={this.handleChange} />
-								<label htmlFor='image'>Profile Image</label>
-								<input id='image' type='file' accept="image/x-png,image/gif,image/jpeg" onChange={this.imageChange}/>
-								<input type='button' value='Cancel' onClick={this.edit}/>
-								<input type='button' value='Save' onClick={this.submitEdit}/>
+								<div className='level'>
+									<div className='level-item'>
+										<h3 className='title is-5'>{this.state.band.city}, {this.state.band.state} </h3>
+									</div>
+								</div>
+								<div className='level'>
+									<p className='title is-5 level-item'>Bio</p>
+								</div>
+								<div className='level'>
+									<div className='level-item'>
+										<textarea className='textarea' id='bio' type='textarea' value={this.state.bio} onChange={this.handleChange} />
+									</div>
+								</div>
+								<div className='level'>
+									<div className='level-item file'>
+										<label className='file-label' htmlFor='image'>
+											<input className='file-input' id='image' type='file' accept="image/x-png,image/gif,image/jpeg" onChange={this.imageChange}/>
+											<span className="file-cta">
+												<span className="file-icon">
+													<i className="fas fa-upload"></i>
+												</span>
+												<span className="file-label">
+													Choose a file…
+												</span>
+											</span>
+										<span className="file-name">
+											{this.fileName()}
+										</span>
+										</label>
+									</div>
+								</div>
+								<div className='level'>
+									<div className='level-item'>
+										<input className='button is-warning is-inverted' type='button' value='Cancel' onClick={this.edit}/>
+										<input className='button is-warning is-inverted' type='button' value='Save' onClick={this.submitEdit}/>
+									</div>
+								</div>
 							</div>
 				}
 			}else{
-				return 	<div>
-						<h1>{this.state.band.bandName}</h1>
-						{this.image()}
-						<h3>{this.state.band.city}, {this.state.band.state} </h3>
-						<p>{this.state.band.bio}</p>
-						<h3>Songs</h3>
-						<ul>
-							{this.linkSongs()}
-						</ul>
-					</div>
+				return 	<div className='container'>
+							<div className='level'>
+								<h1 className='title level-item'>{this.state.band.bandName}</h1>
+							</div>
+							{this.image()}
+							<div className='level'>
+								<div className='level-item'>
+									<h3 className='title is-5'>{this.state.band.city}, {this.state.band.state} </h3>
+								</div>
+							</div>
+							<div className='level'>
+								<div className='level-item'>
+									<p>{this.state.band.bio}</p>
+								</div>
+							</div>
+							<div className='level'>
+								<h3 className='title is-4 level-item'>Songs</h3>
+							</div>
+							<ul>
+								{this.linkSongs()}
+							</ul>
+						</div>
 			}
 		}
 	}.bind(this)

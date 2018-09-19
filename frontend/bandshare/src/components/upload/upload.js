@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-
+import '../styles/upload.css'
 export default class Upload extends Component {
 
 	state = {
@@ -75,25 +75,71 @@ export default class Upload extends Component {
 		}
 	}
 
+	fileName = function(){
+		if(this.state.mp3 === null){
+			return 'Choose an mp3 file'
+		}else{
+			return (this.state.mp3[0].name)
+		}
+	}
+
+	checkFields = function(){
+		if(this.state.title !== '' && this.state.album !== '' && this.state.mp3 !== null && this.state.genres !== null){
+			return <input className='button is-warning is-inverted' type="button" value="Upload" onClick={this.upload} />
+		}else{
+			return <input className='button is-warning is-inverted' type="button" value="Upload" disabled />
+		}
+	}
+
 	authCheck = function () {
 		if (!this.props.isBand) {
 			return <h3>Please log in as an authorized band to upload music</h3>
 		} else {
-			return <div>
-				<form action="" autoComplete='off'>
-					<label htmlFor='title'>Song Name</label>
-					<input id="title" type='text' value={this.state.title} onChange={this.change} />
-					<label htmlFor='album'>Album</label>
-					<input id="album" type='text' value={this.state.album} onChange={this.change} />
-					<label htmlFor='mp3'>MP3</label>
-					<input id="mp3" type='file' accept='audio/mp3' onChange={this.fileChange} />
-					<label htmlFor='genre'>Genres</label>
-					<select id='genre' multiple onChange={ this.formChange}>
-						{this.selectForm()}
-					</select>
-					<input type="button" value="Upload" onClick={this.upload} />
+			return 	<form action="" autoComplete='off'>
+						<div className='level'>
+							<div className='level-item'>
+								<label htmlFor='title'>Song Name</label>
+								<input className='input' id="title" type='text' value={this.state.title} onChange={this.change} />
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item'>
+								<label htmlFor='album'>Album</label>
+								<input className='input' id="album" type='text' value={this.state.album} onChange={this.change} />
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item file'>
+								<label className='file-label' htmlFor='mp3'>
+									<input className='file-input' id="mp3" type='file' accept='audio/mp3' name='mp3' onChange={this.fileChange} />
+									<span className="file-cta">
+										<span className="file-icon">
+											<i className="fas fa-upload"></i>
+										</span>
+										<span className="file-label">
+											Choose a file…
+										</span>
+									</span>
+								<span className="file-name">
+									{this.fileName()}
+								</span>
+								</label>
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item select is-multiple'>
+								<label htmlFor='genre'>Genres</label>
+								<select id='genre' multiple onChange={ this.formChange}>
+									{this.selectForm()}
+								</select>
+							</div>
+						</div>
+						<div className='level'>
+							<div className='level-item'>
+								{this.checkFields()}
+							</div>
+						</div>
 				</form>
-			</div>
 		}
 	}
 
@@ -115,8 +161,10 @@ export default class Upload extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Upload</h1>
+			<div className='container'>
+				<div className='level'>
+					<h1 className='title level-item'>Upload</h1>
+				</div>
 				{this.authCheck()}
 			</div>
 		)
